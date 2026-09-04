@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نامه به نماینده مجلس — امضای دیجیتال</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap');
+
+  :root{
+    --paper: #F5F7FA;
+    --paper-dark: #E8EDF3;
+    --ink: #172033;
+    --ink-soft: #526071;
+    --maroon: #173B67;
+    --maroon-deep: #0E2948;
+    --gold: #C59A4A;
+    --line: #D3DAE3;
+    --green-ok: #2F6B50;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--paper);
+    background-image:
+      radial-gradient(ellipse at top left, rgba(23,59,103,0.045), transparent 55%),
+      radial-gradient(ellipse at bottom right, rgba(197,154,74,0.07), transparent 55%);
+    color: var(--ink);
+    font-family: 'Vazirmatn', sans-serif;
+    line-height: 1.9;
+    padding: 0;
+  }
+
+  .wrap{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 28px 20px 80px;
+  }
+
+  /* ===== Letterhead ===== */
+  .letterhead{
+    text-align:center;
+    padding: 20px 0 26px;
+    border-bottom: 3px double var(--maroon);
+    margin-bottom: 30px;
+  }
+  .letterhead .bismillah{
+    font-family:'Noto Naskh Arabic', serif;
+    font-size: 22px;
+    color: var(--maroon-deep);
+    margin-bottom: 6px;
+  }
+  .letterhead .kicker{
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--maroon-deep);
+    letter-spacing: 0.2px;
+    line-height: 1.8;
+    margin-top: 4px;
+  }
+
+  /* ===== Letter card ===== */
+  .letter{
+    background: #FFFDF8;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02), 0 12px 30px -18px rgba(14,41,72,0.18);
+    padding: 34px 28px;
+    position: relative;
+  }
+  .letter::before{
+    content:"";
+    position:absolute;
+    top:14px; bottom:14px; right:14px;
+    width:1px;
+    background: var(--line);
+  }
+  .letter-title{
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--maroon-deep);
+    text-align:center;
+    margin: 0 0 4px;
+  }
+  .letter-sub{
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    text-align:center;
+    margin: 0 0 22px;
+  }
+  .letter-subject{
+    font-size: 14px;
+    font-weight:600;
+    text-align:center;
+    color: var(--ink);
+    background: var(--paper-dark);
+    border-radius: 3px;
+    padding: 10px 14px;
+    margin-bottom: 22px;
+  }
+  .letter-body{
+    font-family:'Noto Naskh Arabic', serif;
+    font-size: 16px;
+    color: var(--ink);
+    text-align: justify;
+    text-justify: inter-word;
+  }
+  .letter-body p{ margin: 0 0 16px; }
+  .letter-body ol{
+    margin: 0 0 16px;
+    padding-inline-start: 22px;
+  }
+  .letter-body li{ margin-bottom: 8px; }
+  .letter-sign{
+    margin-top: 24px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--maroon-deep);
+    font-family:'Vazirmatn', sans-serif;
+    font-size: 15px;
+  }
+  .toggle-full{
+    display:block;
+    margin: 16px auto 0;
+    background: none;
+    border: none;
+    color: var(--maroon);
+    font-family:'Vazirmatn', sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .letter-body.collapsed{
+    max-height: 190px;
+    overflow: hidden;
+    position: relative;
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+
+  /* ===== Stats bar ===== */
+  .stats{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 14px;
+    margin: 30px 0 18px;
+    padding: 16px 20px;
+    background: var(--maroon-deep);
+    border-radius: 4px;
+    color: #F3EBDD;
+  }
+  .stats .count-num{
+    font-size: 30px;
+    font-weight: 900;
+    color: #fff;
+    line-height:1;
+  }
+  .stats .count-label{
+    font-size: 13px;
+    color: #E0CFC2;
+    margin-top: 2px;
+  }
+
+  /* ===== Form ===== */
+  .form-section{
+    margin-top: 32px;
+  }
+  .form-section h2{
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 4px;
+  }
+  .form-section .hint{
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+  }
+  form{
+    display: grid;
+    gap: 14px;
+  }
+  .field label{
+    display:block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .row2{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  input, textarea{
+    width:100%;
+    font-family:'Vazirmatn', sans-serif;
+    font-size: 14.5px;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 11px 13px;
+    outline: none;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  input:focus, textarea:focus{
+    border-color: var(--maroon);
+    box-shadow: 0 0 0 3px rgba(23,59,103,0.10);
+  }
+  textarea{ resize: vertical; min-height: 64px; }
+  .char-count{
+    font-size: 11.5px;
+    color: #A79D8A;
+    text-align: left;
+    margin-top: 3px;
+  }
+  .consent{
+    display:flex;
+    align-items:flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .consent input{ width:auto; margin-top: 3px; }
+
+  /* ===== Signature pad ===== */
+  .pad-field label{
+    display:block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .pad-box{
+    position: relative;
+    border: 1.5px dashed var(--line);
+    border-radius: 6px;
+    background: #fff;
+    touch-action: none;
+  }
+  .pad-box.filled{
+    border-style: solid;
+    border-color: var(--gold);
+  }
+  canvas#padCanvas{
+    display:block;
+    width: 100%;
+    height: 280px;
+    border-radius: 6px;
+    cursor: crosshair;
+  }
+  .pad-placeholder{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size: 13.5px;
+    color: #BEB49E;
+    pointer-events:none;
+    text-align:center;
+    padding: 0 20px;
+  }
+  .pad-baseline{
+    position:absolute;
+    left: 18px; right: 18px; bottom: 32px;
+    height: 1px;
+    background: var(--line);
+    pointer-events:none;
+  }
+  .pad-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top: 8px;
+  }
+  .pad-clear{
+    background:none;
+    border:none;
+    color: var(--maroon);
+    font-family:'Vazirmatn', sans-serif;
+    font-size: 12.5px;
+    font-weight:600;
+    cursor:pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding: 4px 0;
+  }
+  .pad-hint{
+    font-size: 11.5px;
+    color: #A79D8A;
+  }
+
+  button.submit-btn{
+    font-family:'Vazirmatn', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #fff;
+    background: var(--maroon);
+    border: none;
+    border-radius: 4px;
+    padding: 13px 20px;
+    cursor: pointer;
+    transition: background .15s ease, transform .1s ease;
+  }
+  button.submit-btn:hover{ background: var(--maroon-deep); }
+  button.submit-btn:active{ transform: scale(0.99); }
+  button.submit-btn:disabled{ opacity:0.6; cursor:default; }
+
+  .status-msg{
+    font-size: 13.5px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    display:none;
+  }
+  .status-msg.show{ display:block; }
+  .status-msg.ok{ background:#E8F1EA; color: var(--green-ok); }
+  .status-msg.err{ background:#F7E7E5; color: var(--maroon-deep); }
+
+  /* ===== Signature registry ===== */
+  .registry{
+    margin-top: 36px;
+  }
+  .registry h2{
+    font-size: 17px;
+    font-weight:700;
+    margin: 0 0 14px;
+  }
+  .sig-list{
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .sig-item{
+    display:grid;
+    grid-template-columns: 26px 1fr;
+    gap: 12px;
+    padding: 14px 4px;
+    border-bottom: 1px solid var(--line);
+    align-items:start;
+  }
+  .sig-num{
+    font-size: 12px;
+    color: #A79D8A;
+    font-weight:600;
+    padding-top: 2px;
+  }
+  .sig-name{
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .sig-note{
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    line-height: 1.7;
+  }
+  .empty-state{
+    text-align:center;
+    color: var(--ink-soft);
+    font-size: 14px;
+    padding: 30px 10px;
+    border: 1px dashed var(--line);
+    border-radius: 4px;
+  }
+  .load-more{
+    display:block;
+    margin: 16px auto 0;
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 9px 18px;
+    font-family:'Vazirmatn', sans-serif;
+    font-size: 13px;
+    font-weight:600;
+    color: var(--ink-soft);
+    cursor:pointer;
+  }
+
+  .footnote{
+    text-align:center;
+    font-size: 12px;
+    color: #A79D8A;
+    margin-top: 34px;
+  }
+
+  @media (max-width: 480px){
+    .row2{ grid-template-columns: 1fr; }
+    .letter{ padding: 24px 18px; }
+    .stats{ flex-direction:column; align-items:flex-start; }
+    .sig-item{ grid-template-columns: 22px 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="letterhead">
+    <div class="bismillah">بسمه‌تعالی</div>
+    <div class="kicker">**نامه سرگشاده به مقامات و مراجع عالی‌رتبه کشور و دستگاه‌های نظارتی و اجرایی**
+ </div>
+  </div>
+
+  <div class="letter">
+    <div class="letter-title">جناب .........</div>
+    <div class="letter-sub">ریاست محترم ..........</div>
+    <div class="letter-subject">
+      موضوع: درخواست رسیدگی و احقاق حقوق مصرف‌کنندگان در نحوه محاسبه و افزایش قیمت خودروهای مشارکت در تولید (پیش‌فروش) ایران‌خودرو
+    </div>
+
+    <div class="letter-body collapsed" id="letterBody">
+      <p>با سلام و احترام</p>
+      <p>به استحضار می‌رساند اینجانبان در طرح فروش شرکت ایران‌خودرو، از طریق سامانه رسمی این شرکت نسبت به ثبت‌نام و خرید خودرو اقدام نموده‌ایم. ثبت‌نام اینجانبان در بازه ۲۶ تا ۲۹ اردیبهشت‌ماه ۱۴۰۵ انجام شده و در زمان ثبت‌نام، ۵۰ درصد مبلغ خودرو به شرکت ایران‌خودرو پرداخت گردیده است؛ به عبارت دیگر، نیمی از ارزش خودرو در زمان مقرر توسط مصرف‌کننده پرداخت و در اختیار شرکت قرار گرفته است.</p>
+      <p>متأسفانه در فرآیند ثبت‌نام، به دلیل عدم شفافیت در نحوه انعقاد قرارداد و اعلام شرایط فروش، مصرف‌کنندگان با عنوان «پیش‌فروش» ترغیب به ثبت‌نام شده‌اند، در حالی که مفاد و ماهیت قرارداد عملاً واجد ویژگی‌های «مشارکت در تولید» است و این موضوع موجب تضییع حقوق مصرف‌کنندگان شده است.</p>
+      <p>با این حال، شرکت ایران‌خودرو در مدت کوتاهی پس از ثبت‌نام اینجانبان، حدود ۶۰ درصد افزایش قیمت اعمال نموده و مقرر کرده است که مابقی مبلغ در زمان تحویل، بر اساس قیمت روز خودرو از مصرف‌کننده دریافت شود. این در حالی است که با توجه به شرایط اقتصادی و تورم موجود در کشور، افزایش مکرر قیمت خودرو در فواصل زمانی مختلف، عملاً هزینه‌های سنگین و غیرمنصفانه‌ای به مصرف‌کننده‌ای تحمیل می‌کند که پیش از این بخش قابل توجهی از بهای خودرو را پرداخت کرده است.</p>
+      <p>از منظر شرع، عرف، و قانون، هنگامی که مصرف‌کننده ۵۰ درصد بهای خودرو را در زمان ثبت‌نام پرداخت می‌نماید، به همان نسبت (معادل ۳ دنگ از ۶ دنگ خودرو) در مالکیت مبیع شریک می‌شود. بر این اساس، افزایش قیمت‌های بعدی نباید بر سهمی که قبلاً پرداخت و تملیک شده اعمال گردد، چرا که این امر خلاف قاعده فقهی «لا ضرر»، خلاف عرف رایج معاملات، و مغایر با روح حاکم بر قانون حمایت از حقوق مصرف‌کنندگان خودرو و مصوبات شورای رقابت (از جمله مصوبه شماره ۴۷۳) است.</p>
+      <p>بر اساس رأی اخیر هیئت عمومی دیوان عدالت اداری (مورخ ۳۰ تیر ۱۴۰۵)، با اعمال ماده ۹۱ قانون دیوان، ابطال مصوبه ۴۷۳ شورای رقابت شامل قراردادهای منعقدشده پیش از تاریخ یادشده نمی‌شود. به عبارت دیگر، قراردادهای پیش‌فروش خودرو که تا پیش از ۳۰ تیر ۱۴۰۵ منعقد شده‌اند، همچنان مشمول همان مصوبه باقی می‌مانند و خودروسازان مجاز به دخل و تصرف یا تغییر در مفاد این قراردادها نیستند.</p>
+      <p>لذا با توجه به مراتب فوق و با عنایت به ضرورت حمایت از حقوق مصرف‌کنندگان، از جنابعالی تقاضا داریم دستور فرمایید موضوع در صحن علنی مجلس، قوه قضائیه، دیوان عدالت اداری و مراجع ذی‌صلاح مورد بررسی و پیگیری قرار گیرد و نحوه محاسبه قیمت خودرو و افزایش‌های اعمال‌شده، با توجه به مصوبات و مقررات شورای رقابت، از جمله مصوبه شماره ۴۷۳، بررسی گردد.</p>
+      <p>به‌طور مشخص، درخواست اینجانبان این است که:</p>
+      <ol>
+        <li>مبلغ پرداختی در زمان ثبت‌نام و انعقاد قرارداد (۵۰ درصد بهای خودرو)، مشمول افزایش قیمت و آثار تورمی نگردد؛</li>
+        <li>افزایش قیمت صرفاً نسبت به مبلغ باقی‌مانده و مطابق ضوابط قانونی و مصوبات مربوطه محاسبه شود؛</li>
+        <li>با توجه به رأی دیوان عدالت اداری، قراردادهای منعقدشده پیش از ۳۰ تیر ۱۴۰۵ از شمول ابطال مصوبه ۴۷۳ خارج بوده و خودروساز مجاز به تغییر مفاد آن نیست.</li>
+      </ol>
+      <p>از جنابعالی به عنوان نماینده محترم مردم در مجلس شورای اسلامی، تقاضا داریم با توجه به شرایط اقتصادی موجود و ضرورت صیانت از حقوق شهروندان و مصرف‌کنندگان، نسبت به رسیدگی، مطالبه شفاف‌سازی از شرکت ایران‌خودرو و جلوگیری از تضییع حقوق اینجانبان مساعدت و پیگیری لازم را مبذول فرمایید.</p>
+      <p>پیشاپیش از توجه، حمایت و پیگیری جنابعالی در جهت احقاق حقوق مصرف‌کنندگان صمیمانه سپاسگزاریم.</p>
+    </div>
+    <button class="toggle-full" id="toggleBtn">نمایش متن کامل نامه</button>
+
+    <div class="letter-sign">با احترام — جمعی از متقاضیان و مصرف‌کنندگان خودرو شرکت ایران‌خودرو</div>
+  </div>
+
+  <div class="stats">
+    <div>
+      <div class="count-num" id="sigCount">۰</div>
+      <div class="count-label">نفر تاکنون امضا کرده‌اند</div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h2>امضای دیجیتال این نامه</h2>
+    <p class="hint">نام، شهر و در صورت تمایل یک جمله کوتاه بنویسید، سپس با انگشت یا ماوس در کادر پایین امضا کنید.</p>
+    <form id="sigForm">
+      <div class="row2">
+        <div class="field">
+          <label for="fname">نام و نام خانوادگی</label>
+          <input type="text" id="fname" maxlength="60" required placeholder="مثلاً: علی احمدی">
+        </div>
+        <div class="field">
+          <label for="fcity">شهر</label>
+          <input type="text" id="fcity" maxlength="40" required placeholder="مثلاً: اصفهان">
+        </div>
+      </div>
+      <div class="field">
+        <label for="fphone">شماره موبایل</label>
+        <input type="tel" id="fphone" maxlength="15" required placeholder="مثلاً: 09121234567" inputmode="numeric" pattern="[0-9]{10,15}">
+      </div>
+      <div class="field">
+        <label for="fnote">متن کوتاه (اختیاری)</label>
+        <textarea id="fnote" maxlength="220" placeholder="مثلاً: من هم مانند سایرین ثبت‌نام کرده‌ام و خواستار رسیدگی به این موضوع هستم."></textarea>
+        <div class="char-count"><span id="noteLen">0</span>/۲۲۰</div>
+      </div>
+
+      <div class="pad-field">
+        <label>امضای شما (با انگشت یا ماوس بکشید)</label>
+        <div class="pad-box" id="padBox">
+          <div class="pad-baseline"></div>
+          <canvas id="padCanvas"></canvas>
+          <div class="pad-placeholder" id="padPlaceholder">اینجا امضا کنید</div>
+        </div>
+        <div class="pad-actions">
+          <button type="button" class="pad-clear" id="padClear">پاک کردن و امضای مجدد</button>
+          <span class="pad-hint">امضا الزامی است</span>
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="fconsent" required>
+        <span>تأیید می‌کنم که این نامه را مطالعه کرده‌ام و با امضای آن موافقم. نام، شهر، متن و امضای من به‌صورت عمومی در فهرست امضاکنندگان نمایش داده می‌شود
+ضمنا اجازه ویرایش متن نامه را خواهم داد .</span>
+      </label>
+      <button type="submit" class="submit-btn" id="submitBtn">ثبت امضا</button>
+      <div class="status-msg" id="statusMsg"></div>
+    </form>
+  </div>
+
+  <div class="registry">
+    <h2>فهرست امضاکنندگان</h2>
+    <div id="sigListWrap">
+      <div class="empty-state" id="emptyState">هنوز کسی امضا نکرده — اولین نفر باشید.</div>
+      <div class="sig-list" id="sigList" style="display:none;"></div>
+      <button class="load-more" id="loadMoreBtn" style="display:none;">نمایش بیشتر</button>
+    </div>
+  </div>
+
+  <div class="footnote">این صفحه صرفاً برای جمع‌آوری امضای دیجیتال ساخته شده است.</div>
+</div>
+
+<script>
+/* ====================================================================
+   قبل از آپلود روی هاست، این خط را با لینک Web App خودتون از
+   Google Apps Script جایگزین کنید (راهنما در فایل google-apps-script.gs).
+   مثال: 'https://script.google.com/macros/s/AKfycb.../exec'
+==================================================================== */
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwLZf6CLzKHMTM9-Lgxy6yO2MOLWHH9wHvegDsYh92Vz2ZPJU1CVeO-9jlwN1dOUTI/exec';
+
+let signatures = []; // {id, name, city, note, ts, img}
+let visibleCount = 15;
+
+const toPersianDigits = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function genId(){
+  return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+}
+
+/* ---------- Signature pad ---------- */
+const canvas = document.getElementById('padCanvas');
+const ctx = canvas.getContext('2d');
+const padBox = document.getElementById('padBox');
+const padPlaceholder = document.getElementById('padPlaceholder');
+let drawing = false;
+let hasSignature = false;
+let lastPoint = null;
+let midPoint = null;
+
+function resizeCanvas(){
+  const rect = canvas.getBoundingClientRect();
+  const ratio = window.devicePixelRatio || 1;
+  const prevData = hasSignature ? canvas.toDataURL() : null;
+  canvas.width = rect.width * ratio;
+  canvas.height = rect.height * ratio;
+  ctx.scale(ratio, ratio);
+  ctx.lineWidth = 3;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.strokeStyle = '#173B67';
+  if(prevData){
+    const img = new Image();
+    img.onload = () => ctx.drawImage(img, 0, 0, rect.width, rect.height);
+    img.src = prevData;
+  }
+}
+window.addEventListener('resize', resizeCanvas);
+setTimeout(resizeCanvas, 50);
+
+function getPoint(e){
+  const rect = canvas.getBoundingClientRect();
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  return { x: clientX - rect.left, y: clientY - rect.top };
+}
+
+function midOf(a, b){
+  return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+}
+
+function startDraw(e){
+  e.preventDefault();
+  drawing = true;
+  hasSignature = true;
+  padPlaceholder.style.display = 'none';
+  padBox.classList.add('filled');
+  lastPoint = getPoint(e);
+  midPoint = lastPoint;
+  ctx.beginPath();
+  ctx.moveTo(lastPoint.x, lastPoint.y);
+}
+function moveDraw(e){
+  if(!drawing) return;
+  e.preventDefault();
+  const p = getPoint(e);
+  const newMid = midOf(lastPoint, p);
+  // curve from the last midpoint, through lastPoint, to the new midpoint —
+  // this rounds off direction changes instead of drawing sharp corners
+  ctx.beginPath();
+  ctx.moveTo(midPoint.x, midPoint.y);
+  ctx.quadraticCurveTo(lastPoint.x, lastPoint.y, newMid.x, newMid.y);
+  ctx.stroke();
+  midPoint = newMid;
+  lastPoint = p;
+}
+function endDraw(e){
+  if(!drawing) return;
+  drawing = false;
+  if(lastPoint && midPoint){
+    ctx.beginPath();
+    ctx.moveTo(midPoint.x, midPoint.y);
+    ctx.lineTo(lastPoint.x, lastPoint.y);
+    ctx.stroke();
+  }
+}
+
+canvas.addEventListener('mousedown', startDraw);
+canvas.addEventListener('mousemove', moveDraw);
+window.addEventListener('mouseup', endDraw);
+canvas.addEventListener('touchstart', startDraw, { passive:false });
+canvas.addEventListener('touchmove', moveDraw, { passive:false });
+canvas.addEventListener('touchend', endDraw);
+
+document.getElementById('padClear').addEventListener('click', () => {
+  const rect = canvas.getBoundingClientRect();
+  ctx.clearRect(0, 0, rect.width, rect.height);
+  hasSignature = false;
+  padPlaceholder.style.display = 'flex';
+  padBox.classList.remove('filled');
+});
+
+function getSignatureDataUrl(){
+  // export at a modest fixed resolution to keep payload small
+  const rect = canvas.getBoundingClientRect();
+  const out = document.createElement('canvas');
+  out.width = 400;
+  out.height = Math.round(400 * (rect.height / rect.width));
+  const octx = out.getContext('2d');
+  octx.fillStyle = '#ffffff';
+  octx.fillRect(0, 0, out.width, out.height);
+  octx.drawImage(canvas, 0, 0, out.width, out.height);
+  return out.toDataURL('image/png');
+}
+
+/* ---------- Data load / render ---------- */
+async function loadSignatures(){
+  try{
+    const res = await fetch(APPS_SCRIPT_URL, { method: 'GET' });
+    signatures = await res.json();
+    if(!Array.isArray(signatures)) signatures = [];
+  }catch(e){
+    signatures = [];
+  }
+  render();
+}
+
+function render(){
+  const count = signatures.length;
+  document.getElementById('sigCount').textContent = toPersianDigits(count);
+
+  const listEl = document.getElementById('sigList');
+  const emptyEl = document.getElementById('emptyState');
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+  if(count === 0){
+    listEl.style.display = 'none';
+    emptyEl.style.display = 'block';
+    loadMoreBtn.style.display = 'none';
+    return;
+  }
+
+  emptyEl.style.display = 'none';
+  listEl.style.display = 'grid';
+
+  const ordered = [...signatures].reverse(); // newest first
+  const toShow = ordered.slice(0, visibleCount);
+
+  listEl.innerHTML = toShow.map((s, i) => `
+    <div class="sig-item" data-id="${escapeHtml(s.id)}">
+      <div class="sig-num">${toPersianDigits(count - i)}</div>
+      <div>
+        <span class="sig-name">${escapeHtml(s.name)}</span>
+        ${s.note ? `<div class="sig-note">${escapeHtml(s.note)}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+
+  loadMoreBtn.style.display = ordered.length > visibleCount ? 'block' : 'none';
+}
+
+document.getElementById('loadMoreBtn').addEventListener('click', () => {
+  visibleCount += 30;
+  render();
+});
+
+document.getElementById('toggleBtn').addEventListener('click', () => {
+  const body = document.getElementById('letterBody');
+  const btn = document.getElementById('toggleBtn');
+  const collapsed = body.classList.toggle('collapsed');
+  btn.textContent = collapsed ? 'نمایش متن کامل نامه' : 'بستن متن نامه';
+});
+
+document.getElementById('fnote').addEventListener('input', (e) => {
+  document.getElementById('noteLen').textContent = toPersianDigits(e.target.value.length);
+});
+
+document.getElementById('sigForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const statusEl = document.getElementById('statusMsg');
+  const name = document.getElementById('fname').value.trim();
+  const city = document.getElementById('fcity').value.trim();
+  const phone = document.getElementById('fphone').value.trim();
+  const note = document.getElementById('fnote').value.trim();
+
+  if(!name || !city){
+    statusEl.textContent = 'لطفاً نام و شهر را وارد کنید.';
+    statusEl.className = 'status-msg show err';
+    return;
+  }
+  const phoneDigits = phone.replace(/\D/g, '');
+  if(phoneDigits.length < 10){
+    statusEl.textContent = 'لطفاً یک شماره موبایل معتبر وارد کنید.';
+    statusEl.className = 'status-msg show err';
+    return;
+  }
+  if(!hasSignature){
+    statusEl.textContent = 'لطفاً در کادر امضا، با انگشت یا ماوس امضای خود را بکشید.';
+    statusEl.className = 'status-msg show err';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'در حال ثبت...';
+
+  const id = genId();
+  const dataUrl = getSignatureDataUrl();
+
+  try{
+    const payload = { id, name, city, phone: phoneDigits, note, ts: new Date().toISOString(), img: dataUrl };
+    // content-type text/plain avoids a CORS preflight against Apps Script
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    });
+    const result = await res.json();
+    if(!result || result.success !== true){
+      throw new Error(result && result.error ? result.error : 'save failed');
+    }
+
+    signatures.push(payload);
+    statusEl.textContent = 'امضای شما با موفقیت ثبت شد. سپاسگزاریم.';
+    statusEl.className = 'status-msg show ok';
+    document.getElementById('sigForm').reset();
+    document.getElementById('noteLen').textContent = '۰';
+    document.getElementById('padClear').click();
+    visibleCount = Math.max(visibleCount, 15);
+    render();
+  }catch(err){
+    statusEl.textContent = 'مشکلی در ثبت امضا پیش آمد. لطفاً دوباره تلاش کنید.';
+    statusEl.className = 'status-msg show err';
+  }finally{
+    btn.disabled = false;
+    btn.textContent = 'ثبت امضا';
+  }
+});
+
+loadSignatures();
+</script>
+</body>
+</html>
