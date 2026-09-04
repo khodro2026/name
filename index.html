@@ -621,7 +621,7 @@ document.getElementById('padClear').addEventListener('click', () => {
 function getSignatureDataUrl(){
   // Export at high resolution so enlargement in Google Sheets stays sharp.
   const rect = canvas.getBoundingClientRect();
-  const exportWidth = 1400;
+  const exportWidth = 2000;
   const exportHeight = Math.round(exportWidth * (rect.height / rect.width));
   const out = document.createElement('canvas');
   out.width = exportWidth;
