@@ -536,25 +536,21 @@ let hasSignature = false;
 let lastPoint = null;
 let midPoint = null;
 
-// هر ضربه‌قلم به‌صورت مختصات نسبی (کسری از عرض/ارتفاع کادر، بین ۰ و ۱)
-// ذخیره می‌شه، نه به‌صورت بیت‌مپ. این یعنی برای خروجی گرفتن یا رسم دوباره
-// بعد از تغییر سایز، به‌جای «بزرگ کردن یک تصویر پیکسلی» (که تار می‌شه)،
-// خط امضا از نو و کاملاً شارپ رسم می‌شه — در هر رزولوشنی.
-let strokes = [];
-let currentStroke = null;
-
 function resizeCanvas(){
   const rect = canvas.getBoundingClientRect();
-  const ratio = Math.max(2, window.devicePixelRatio || 1);
-  canvas.width = Math.round(rect.width * ratio);
-  canvas.height = Math.round(rect.height * ratio);
-  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  ctx.lineWidth = 3.2;
+  const ratio = window.devicePixelRatio || 1;
+  const prevData = hasSignature ? canvas.toDataURL() : null;
+  canvas.width = rect.width * ratio;
+  canvas.height = rect.height * ratio;
+  ctx.scale(ratio, ratio);
+  ctx.lineWidth = 3;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   ctx.strokeStyle = '#173B67';
-  if(hasSignature && strokes.length){
-    drawStrokesTo(ctx, rect.width, rect.height, 3.2);
+  if(prevData){
+    const img = new Image();
+    img.onload = () => ctx.drawImage(img, 0, 0, rect.width, rect.height);
+    img.src = prevData;
   }
 }
 window.addEventListener('resize', resizeCanvas);
@@ -564,49 +560,11 @@ function getPoint(e){
   const rect = canvas.getBoundingClientRect();
   const clientX = e.touches ? e.touches[0].clientX : e.clientX;
   const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-  const x = clientX - rect.left;
-  const y = clientY - rect.top;
-  return { x, y, nx: x / rect.width, ny: y / rect.height };
+  return { x: clientX - rect.left, y: clientY - rect.top };
 }
 
 function midOf(a, b){
   return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-}
-
-// رسم همه‌ی ضربه‌قلم‌های ذخیره‌شده روی یک context با هر عرض/ارتفاع دلخواه —
-// همون الگوریتم منحنی نرم قبلی، فقط این‌بار قابل‌استفاده در هر رزولوشنی.
-function drawStrokesTo(targetCtx, width, height, lineWidth){
-  targetCtx.lineWidth = lineWidth;
-  targetCtx.lineCap = 'round';
-  targetCtx.lineJoin = 'round';
-  targetCtx.strokeStyle = '#173B67';
-  targetCtx.fillStyle = '#173B67';
-  strokes.forEach(stroke => {
-    if(!stroke.length) return;
-    const pts = stroke.map(p => ({ x: p.nx * width, y: p.ny * height }));
-    if(pts.length === 1){
-      targetCtx.beginPath();
-      targetCtx.arc(pts[0].x, pts[0].y, lineWidth / 2, 0, Math.PI * 2);
-      targetCtx.fill();
-      return;
-    }
-    let mid = pts[0];
-    let last = pts[0];
-    for(let i = 1; i < pts.length; i++){
-      const p = pts[i];
-      const newMid = midOf(last, p);
-      targetCtx.beginPath();
-      targetCtx.moveTo(mid.x, mid.y);
-      targetCtx.quadraticCurveTo(last.x, last.y, newMid.x, newMid.y);
-      targetCtx.stroke();
-      mid = newMid;
-      last = p;
-    }
-    targetCtx.beginPath();
-    targetCtx.moveTo(mid.x, mid.y);
-    targetCtx.lineTo(last.x, last.y);
-    targetCtx.stroke();
-  });
 }
 
 function startDraw(e){
@@ -617,8 +575,6 @@ function startDraw(e){
   padBox.classList.add('filled');
   lastPoint = getPoint(e);
   midPoint = lastPoint;
-  currentStroke = [lastPoint];
-  strokes.push(currentStroke);
   ctx.beginPath();
   ctx.moveTo(lastPoint.x, lastPoint.y);
 }
@@ -626,7 +582,6 @@ function moveDraw(e){
   if(!drawing) return;
   e.preventDefault();
   const p = getPoint(e);
-  currentStroke.push(p);
   const newMid = midOf(lastPoint, p);
   // curve from the last midpoint, through lastPoint, to the new midpoint —
   // this rounds off direction changes instead of drawing sharp corners
@@ -658,29 +613,21 @@ canvas.addEventListener('touchend', endDraw);
 document.getElementById('padClear').addEventListener('click', () => {
   const rect = canvas.getBoundingClientRect();
   ctx.clearRect(0, 0, rect.width, rect.height);
-  strokes = [];
-  currentStroke = null;
   hasSignature = false;
   padPlaceholder.style.display = 'flex';
   padBox.classList.remove('filled');
 });
 
 function getSignatureDataUrl(){
-  // به‌جای بزرگ کردن یک عکس پیکسلی (که تار می‌شه)، امضا رو مستقیم روی
-  // یک بوم ۱۶۰۰ پیکسلی از نو، به‌صورت وکتور، شارپ رسم می‌کنیم.
+  // export at a modest fixed resolution to keep payload small
   const rect = canvas.getBoundingClientRect();
-  const exportWidth = 1600;
-  const exportHeight = Math.round(exportWidth * (rect.height / rect.width));
   const out = document.createElement('canvas');
-  out.width = exportWidth;
-  out.height = exportHeight;
+  out.width = 400;
+  out.height = Math.round(400 * (rect.height / rect.width));
   const octx = out.getContext('2d');
-  octx.imageSmoothingEnabled = true;
-  octx.imageSmoothingQuality = 'high';
   octx.fillStyle = '#ffffff';
   octx.fillRect(0, 0, out.width, out.height);
-  const lineWidth = 3.2 * (exportWidth / rect.width);
-  drawStrokesTo(octx, out.width, out.height, lineWidth);
+  octx.drawImage(canvas, 0, 0, out.width, out.height);
   return out.toDataURL('image/png');
 }
 
