@@ -707,7 +707,14 @@ document.getElementById('sigForm').addEventListener('submit', async (e) => {
     statusEl.className = 'status-msg show err';
     return;
   }
-  const phoneDigits = phone.replace(/\D/g, '');
+  function normalizeDigits(str) {
+  return String(str)
+    .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+    .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+    .replace(/\D/g, '');
+}
+
+const phoneDigits = normalizeDigits(phone);
   if(phoneDigits.length < 10){
     statusEl.textContent = 'لطفاً یک شماره موبایل معتبر وارد کنید.';
     statusEl.className = 'status-msg show err';
