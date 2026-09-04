@@ -538,12 +538,12 @@ let midPoint = null;
 
 function resizeCanvas(){
   const rect = canvas.getBoundingClientRect();
-  const ratio = window.devicePixelRatio || 1;
-  const prevData = hasSignature ? canvas.toDataURL() : null;
-  canvas.width = rect.width * ratio;
-  canvas.height = rect.height * ratio;
-  ctx.scale(ratio, ratio);
-  ctx.lineWidth = 3;
+  const ratio = Math.max(2, window.devicePixelRatio || 1);
+  const prevData = hasSignature ? canvas.toDataURL('image/png') : null;
+  canvas.width = Math.round(rect.width * ratio);
+  canvas.height = Math.round(rect.height * ratio);
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  ctx.lineWidth = 3.2;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   ctx.strokeStyle = '#173B67';
@@ -619,12 +619,16 @@ document.getElementById('padClear').addEventListener('click', () => {
 });
 
 function getSignatureDataUrl(){
-  // export at a modest fixed resolution to keep payload small
+  // Export at high resolution so enlargement in Google Sheets stays sharp.
   const rect = canvas.getBoundingClientRect();
+  const exportWidth = 1400;
+  const exportHeight = Math.round(exportWidth * (rect.height / rect.width));
   const out = document.createElement('canvas');
-  out.width = 400;
-  out.height = Math.round(400 * (rect.height / rect.width));
+  out.width = exportWidth;
+  out.height = exportHeight;
   const octx = out.getContext('2d');
+  octx.imageSmoothingEnabled = true;
+  octx.imageSmoothingQuality = 'high';
   octx.fillStyle = '#ffffff';
   octx.fillRect(0, 0, out.width, out.height);
   octx.drawImage(canvas, 0, 0, out.width, out.height);
